@@ -30,3 +30,15 @@
 *.exe
 *.out
 *.app
+
+# My Configure
+*.sdf
+*.sln
+*.opensdf
+*.suo
+Debug/*
+*/Debug/
+*.ipch
+*.vcxproj
+*.filters
+*.user

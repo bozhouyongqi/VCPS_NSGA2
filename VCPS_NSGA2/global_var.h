@@ -15,8 +15,12 @@
 #define Shiyan_NUM 1
 #define Cross_pro 0.7
 #define Mutate_pro 0.05
+const int AGENT_ALL = AGENT1_NUM + AGENT2_NUM + AGENT3_NUM + AGENT4_NUM + AGENT5_NUM;
 
-double maxArray[F_NUM] = {0};
+int agentNumInEveryProc[PROCESS_NUM] = {AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGENT4_NUM, AGENT5_NUM};
+
+double normalizeValue[F_NUM] = {0};
+double agentPara[F_NUM][AGENT_ALL];
 
 
 // 第一个环节对应的企业在时间、质量、成本三个维度上的常数
@@ -45,8 +49,5 @@ double agent5[F_NUM][AGENT5_NUM] = {
 	{0.25,0.28,0.35,0.31,0.30,0.24,0.27,0.34,0.30,0.28,0.26,0.32,0.33,0.31,0.28,0.26},
 	{74,77,82,79,83,73,76,81,80,82,72,76,83,81,82,79}
 };
-
-int corpNumInEveryProc[PROCESS_NUM] = {AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGENT4_NUM, AGENT5_NUM};
-
 
 #endif

@@ -23,7 +23,7 @@ void main() {
 	int shiyan = 0,gen = 0;
 	for (shiyan = 0; shiyan < Shiyan_NUM; shiyan++) {
 		
-		initPop(&oldPop);
+		init(&oldPop);
 		calIndiviualFitness(&oldPop);
 		for (int i = 0; i < P_NUM; i++) {
 			oldPop.rankno[i] = 0;

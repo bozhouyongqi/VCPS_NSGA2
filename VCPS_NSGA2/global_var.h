@@ -15,12 +15,12 @@
 #define Shiyan_NUM 1
 #define Cross_pro 0.7
 #define Mutate_pro 0.05
-const int AGENT_ALL = AGENT1_NUM + AGENT2_NUM + AGENT3_NUM + AGENT4_NUM + AGENT5_NUM;
+#define AGENT_ALL AGENT1_NUM + AGENT2_NUM + AGENT3_NUM + AGENT4_NUM + AGENT5_NUM
 
 int agentNumInEveryProc[PROCESS_NUM] = {AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGENT4_NUM, AGENT5_NUM};
 
 double normalizeValue[F_NUM] = {0};
-double agentPara[F_NUM][AGENT_ALL];
+double agentPara[F_NUM][AGENT_ALL] = {0};
 
 
 // 第一个环节对应的企业在时间、质量、成本三个维度上的常数
@@ -48,6 +48,26 @@ double agent5[F_NUM][AGENT5_NUM] = {
 	{3.1,3.9,3.3,3.7,3.5,3.0,3.8,3.2,3.6,3.4,3.2,3.6,3.1,3.5,3.3,3.4},
 	{0.25,0.28,0.35,0.31,0.30,0.24,0.27,0.34,0.30,0.28,0.26,0.32,0.33,0.31,0.28,0.26},
 	{74,77,82,79,83,73,76,81,80,82,72,76,83,81,82,79}
+};
+
+double constraint[TASK_NUM][PROCESS_NUM][F_NUM] = {
+	8.0, 0.4, 800,
+	5.3, 0.35, 750,
+	5.4, 0.34, 650,
+	4.3, 0.35, 780,
+	4.5, 0.32, 750,
+
+	8.9, 0.41, 810,
+	5.2, 0.44, 760,
+	9.0, 0.32, 640,
+	4.5, 0.38, 770,
+	4.0, 0.35, 740,
+
+	8.2, 0.39, 820,
+	7.0, 0.42, 760,
+	6.5, 0.34, 630,
+	7.9, 0.36, 790,
+	8.0, 0.32, 760
 };
 
 #endif

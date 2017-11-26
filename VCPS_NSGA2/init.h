@@ -27,5 +27,35 @@ void initPop(Population *pop_ptr) {
 	}
 }
 
+void initConst() {
+	double time = 0, quality = 0, cost = 0;
+	for (int obj = 0; obj < F_NUM; obj ++) {
+		for (int agent = 0; agent < AGENT1_NUM; agent++) {
+			if (agent1[obj][agent] > maxArray[obj]) {
+				maxArray[obj] = agent1[obj][agent];
+			}
+		}
+		for (int agent = 0; agent < AGENT2_NUM; agent++) {
+			if (agent2[obj][agent] > maxArray[obj]) {
+				maxArray[obj] = agent2[obj][agent];
+			}
+		}
+		for (int agent = 0; agent < AGENT3_NUM; agent++) {
+			if (agent3[obj][agent] > maxArray[obj]) {
+				maxArray[obj] = agent3[obj][agent];
+			}
+		}
+		for (int agent = 0; agent < AGENT4_NUM; agent++) {
+			if (agent4[obj][agent] > maxArray[obj]) {
+				maxArray[obj] = agent4[obj][agent];
+			}
+		}
+		for (int agent = 0; agent < AGENT5_NUM; agent++) {
+			if (agent5[obj][agent] > maxArray[obj]) {
+				maxArray[obj] = agent5[obj][agent];
+			}
+		}
+	}
+}
 
 #endif

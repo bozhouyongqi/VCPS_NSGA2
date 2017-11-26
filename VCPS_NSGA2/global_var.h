@@ -16,6 +16,8 @@
 #define Cross_pro 0.7
 #define Mutate_pro 0.05
 
+double maxArray[F_NUM] = {0};
+
 
 // 第一个环节对应的企业在时间、质量、成本三个维度上的常数
 double agent1[F_NUM][AGENT1_NUM] = {
@@ -32,7 +34,7 @@ double agent3[F_NUM][AGENT3_NUM] = {
 	{5.3,5.5,4.5,5.1,4.9,5.2,5.4,4.4,5.0,4.8,5.2,5.3,4.3,4.8,4.9,5.1,4.8},
 	{0.37,0.41,0.35,0.33,0.39,0.36,0.40,0.34,0.32,0.38,0.35,0.39,0.33,0.31,0.36,0.38,0.41},
 	{59,67,63,54,60,58,65,61,52,57,56,62,63,53,61,55,57}
-];
+};
 double agent4[F_NUM][AGENT4_NUM] = {
 	{3.9,3.5,3.7,4.3,3.8,3.4,3.6,4.2,3.7,3.3,3.5,4.1,3.6,3.2,3.6,4.0},
 	{0.44,0.35,0.38,0.39,0.43,0.34,0.37,0.38,0.42,0.33,0.36,0.37,0.41,0.32,0.36,0.38},
@@ -44,7 +46,7 @@ double agent5[F_NUM][AGENT5_NUM] = {
 	{74,77,82,79,83,73,76,81,80,82,72,76,83,81,82,79}
 };
 
-int corpNumInEveryProc[PROCESS_NUM] = [AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGENT4_NUM, AGENT5_NUM];
+int corpNumInEveryProc[PROCESS_NUM] = {AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGENT4_NUM, AGENT5_NUM};
 
 
 #endif

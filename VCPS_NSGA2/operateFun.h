@@ -197,22 +197,124 @@ void applyNonDominatedSorting(Population *pop_ptr) {
 		pop_ptr->rankno[rnk-1] = q ;
 	}
 	maxrank1 = rnk;
-
 	/*     Find Max Rank of the population    */
 	for(i = 0;i < P_NUM;i++)
 	{
 		rnk = pop_ptr->ind[i].rank;
-
 		if(rnk > maxrank1)
 			maxrank1 = rnk;
-
 	}
-
 	pop_ptr->maxrank = maxrank1;
 }
 
 void executeSelectOpt(Population *old_pop_ptr, Population *selected_pop_ptr) {
+	int *fit_ptr1,*fit_ptr2;					//分别指向两个个体的rank值
 
+	double *f1_ptr,*f2_ptr;				// f1_ptr分别指向两个个体的cublen值,2015/4/22修改成double
+	double rnd2;
+
+	int (*select_ptr_r)[AGENT_ALL], (*s1_ptr_r)[AGENT_ALL], (*s2_ptr_r)[AGENT_ALL];	 //s1_ptr_r	分别指向两个个体的实数编码
+
+	Individual *j,*j1;
+
+	int i,rnd,rnd1,k,n,j2,r,r1;
+
+	old_pop_ptr->ind_ptr = &(old_pop_ptr->ind[0]);
+
+	selected_pop_ptr->ind_ptr= &(selected_pop_ptr->ind[0]); 
+
+	j =  &(old_pop_ptr->ind[P_NUM-1]);
+
+	old_pop_ptr->ind_ptr = &(old_pop_ptr->ind[0]); 
+	j2 = 0;
+
+
+	for(n = 0,k = 0;n < P_NUM;n++,k++)
+	{
+		selected_pop_ptr->ind_ptr = &(selected_pop_ptr->ind[k]);
+
+		select_ptr_r = selected_pop_ptr->ind_ptr->encode;				 //此处应该是为了复制选中个体的编码值
+
+		// rnd2 = randomperc(); 
+		rnd2=(double)rand()/RAND_MAX;
+
+		rnd2 = P_NUM* rnd2; 
+
+		rnd = floor(rnd2);							 //floor()向下取整
+
+		if(rnd == 0)
+			rnd = P_NUM - k;
+
+		if(rnd == P_NUM)
+			rnd = (P_NUM-2)/2;
+
+		/*Select first parent randomly*/	
+		j = &(old_pop_ptr->ind[rnd-1]);						  
+
+		rnd2 =(double)rand()/RAND_MAX;
+
+		rnd2 = P_NUM * rnd2; 
+
+		rnd1 = floor(rnd2);
+
+		if (rnd1 == 0)
+			rnd1 = P_NUM - n;
+
+		if(rnd1 == P_NUM)
+			rnd1 = (P_NUM - 4)/2;
+
+
+		/*Select second parent randomly*/
+		j1 = &(old_pop_ptr->ind[rnd1-1]);
+
+		old_pop_ptr->ind_ptr = j;					   //在old种群中选择的个体j
+
+		s1_ptr_r = old_pop_ptr->ind_ptr->encode;
+		fit_ptr1 = &(old_pop_ptr->ind_ptr->rank);
+		f1_ptr = &(old_pop_ptr->ind_ptr->cub_len);
+
+		old_pop_ptr->ind_ptr = j1;
+
+		s2_ptr_r = old_pop_ptr->ind_ptr->encode;
+		fit_ptr2 = &(old_pop_ptr->ind_ptr->rank);
+		f2_ptr = &(old_pop_ptr->ind_ptr->cub_len);
+		/*--------------------------------------------------------------------------*/
+
+		/*------------------SELECTION PROCEDURE------------------------------------*/
+
+		/*Comparing the fitnesses*/
+
+		if(*fit_ptr1 > *fit_ptr2)					//两个个体的rank排名比较
+		{
+			for(i=0;i<TASK_NUM;i++)
+				for(r=0;r<AGENT_ALL;r++)
+					*(*(select_ptr_r+i)+r)=*(*(s2_ptr_r+i)+r) ;
+		}
+		else
+		{
+			if(*fit_ptr1 < *fit_ptr2)
+			{
+				for(i=0;i<TASK_NUM;i++)
+					for(r=0;r<AGENT_ALL;r++)
+						*(*(select_ptr_r+i)+r)=*(*(s1_ptr_r+i)+r) ;
+			}
+			else
+			{
+				if(*f1_ptr < *f2_ptr)				  //意思是当两个个体在同一层时，在从拥挤度cublen来比较
+				{
+					for(i=0;i<TASK_NUM;i++)
+						for(r=0;r<AGENT_ALL;r++)
+							*(*(select_ptr_r+i)+r)=*(*(s2_ptr_r+i)+r);
+				}
+				else
+				{
+					for(i=0;i<TASK_NUM;i++)
+						for(r=0;r<AGENT_ALL;r++)
+							*(*(select_ptr_r+i)+r)=*(*(s1_ptr_r+i)+r);
+				}
+			}
+		}
+	}
 };
 
 void crossSelectedPop(Population *selected_pop_ptr, Population *crossed_pop_ptr) {

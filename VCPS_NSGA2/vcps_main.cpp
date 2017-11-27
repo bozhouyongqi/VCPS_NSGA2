@@ -4,6 +4,8 @@ using namespace std;
 #include <stdlib.h>
 #include <time.h>
 
+double min_fit,delta_fit;
+
 #include "global_var.h"
 #include "struct.h"
 #include "init.h"
@@ -38,7 +40,7 @@ void main() {
 			crossSelectedPop(&selectedPop, &crossedPop);
 			mutateCrossedPop(&crossedPop);
 			calIndiviualFitness(&crossedPop);
-			applyEliteStrategy(&oldPop, &crossedPop);
+			applyEliteStrategy(&oldPop, &crossedPop); // 将oldPop与crossedPop合并，选出新一代种群赋值给oldpPop
 		}
 	}
 }

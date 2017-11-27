@@ -4,7 +4,9 @@ using namespace std;
 #include <stdlib.h>
 #include <time.h>
 
-double min_fit,delta_fit;
+double g_min_fit, g_delta_fit;
+double g_pcross=0.8,
+	g_pmut=0.05;
 
 #include "global_var.h"
 #include "struct.h"

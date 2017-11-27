@@ -69,12 +69,12 @@ void applyNonDominatedSorting(Population *pop_ptr) {
 	that the minimum fitness of the better rank individual is always 
 	greater than max fitness of the relatively worse rank*/
 
-	min_fit = P_NUM;
+	g_min_fit = P_NUM;
 
 	/*Difference in the fitness of minimum dummy fitness of better rank 
 	and max fitness of the next ranked individuals*/
 
-	delta_fit = 0.1 * P_NUM;
+	g_delta_fit = 0.1 * P_NUM;
 
 	/*Initializing all the flags to 2*/
 
@@ -318,7 +318,74 @@ void executeSelectOpt(Population *old_pop_ptr, Population *selected_pop_ptr) {
 };
 
 void crossSelectedPop(Population *selected_pop_ptr, Population *crossed_pop_ptr) {
+	
+	int i,j,k,m,n,y,(*par1)[AGENT_ALL],(*par2)[AGENT_ALL],(*chld1)[AGENT_ALL],(*chld2)[AGENT_ALL];
+	double rnd;
 
+	int index_row=0;
+	int index_col=0;
+	int index_num=0;
+
+	int temp=0;
+
+	rnd=(double)rand()/RAND_MAX;  
+
+	crossed_pop_ptr->ind_ptr=&(crossed_pop_ptr->ind[0]);
+
+	selected_pop_ptr->ind_ptr=&(selected_pop_ptr->ind[0]); 
+
+	for (i = 0,y = 0,n = 0;i < P_NUM/2;i++)
+	{
+		crossed_pop_ptr->ind_ptr = &(crossed_pop_ptr->ind[n]);
+		chld1=crossed_pop_ptr->ind_ptr->encode;
+		n = n+1;
+
+		crossed_pop_ptr->ind_ptr = &(crossed_pop_ptr->ind[n]);
+		chld2=crossed_pop_ptr->ind_ptr->encode;
+		n = n+1;
+
+		selected_pop_ptr->ind_ptr = &(selected_pop_ptr->ind[y]);
+		par1 = selected_pop_ptr->ind_ptr->encode;
+		y = y+1;
+
+		selected_pop_ptr->ind_ptr = &(selected_pop_ptr->ind[y]);
+		par2 = selected_pop_ptr->ind_ptr->encode; 
+		y = y+1;
+
+		rnd = (double)rand()/RAND_MAX;
+		if (rnd < g_pcross)
+		{
+			index_row=rand()%(AGENT_ALL-1)+1;//产生1到AGENT_ALL-1之间的随机数，包含1而不包含AGENT_ALL-1
+			index_col=rand()%(TASK_NUM-1)+1;
+
+			for ( j=0;j<index_row;j++)
+				for ( k=0;k<index_col;k++)
+				{
+					temp=  *(*(par1+k)+j)   ;
+
+					*(*(par1+k)+j)=*(*(par2+k)+j);
+
+					*(*(par2+k)+j)=temp;
+				}
+
+				for (j=index_row;j<AGENT_ALL;j++)
+					for ( k=index_col;k<TASK_NUM;k++)
+					{
+						temp=  *(*(par1+k)+j)   ;
+
+						*(*(par1+k)+j)=*(*(par2+k)+j);
+
+						*(*(par2+k)+j)=temp;
+					} 
+		}
+		/*-------------若是需要经过交叉，则先在mate_pop种群中交叉，然后再一起复制到new_pop中-------------*/
+		for ( j=0;j<TASK_NUM;j++)
+			for ( k=0;k<AGENT_ALL;k++)
+			{
+				*(*(chld1+j)+k)=  *(*(par1+j)+k);
+				*(*(chld2+j)+k)=  *(*(par2+j)+k);
+			}
+	} //for(i)循环结束
 };
 
 void mutateCrossedPop(Population *crossed_pop_ptr) {

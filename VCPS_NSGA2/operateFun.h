@@ -217,7 +217,7 @@ void executeSelectOpt(Population *old_pop_ptr, Population *selected_pop_ptr) {
 
 	Individual *j,*j1;
 
-	int i,rnd,rnd1,k,n,j2,r,r1;
+	int i,rnd,rnd1,k,n,j2,r;
 
 	old_pop_ptr->ind_ptr = &(old_pop_ptr->ind[0]);
 
@@ -319,7 +319,7 @@ void executeSelectOpt(Population *old_pop_ptr, Population *selected_pop_ptr) {
 
 void crossSelectedPop(Population *selected_pop_ptr, Population *crossed_pop_ptr) {
 	
-	int i,j,k,m,n,y,(*par1)[AGENT_ALL],(*par2)[AGENT_ALL],(*chld1)[AGENT_ALL],(*chld2)[AGENT_ALL];
+	int i,j,k,n,y,(*par1)[AGENT_ALL],(*par2)[AGENT_ALL],(*chld1)[AGENT_ALL],(*chld2)[AGENT_ALL];
 	double rnd;
 
 	int index_row=0;
@@ -389,7 +389,64 @@ void crossSelectedPop(Population *selected_pop_ptr, Population *crossed_pop_ptr)
 };
 
 void mutateCrossedPop(Population *crossed_pop_ptr) {
+	int index_agt1=0;
+	int index_agt2=0;
 
+	int index_tsk1=0;
+	int index_tsk2=0;
+
+	int temp=0;
+
+	double num_rnd=0;
+
+	int (*mut_ptr)[AGENT_ALL];
+
+	crossed_pop_ptr->ind_ptr=&(crossed_pop_ptr->ind[0]);
+
+	for (int k=0;k<P_NUM;k++)
+	{
+		crossed_pop_ptr->ind_ptr=&(crossed_pop_ptr->ind[k])	;
+		mut_ptr=crossed_pop_ptr->ind_ptr->encode;
+
+		num_rnd=(double)rand()/RAND_MAX; ;
+
+		if (num_rnd < g_pmut)
+		{
+
+			index_agt1=rand()%AGENT_ALL;
+			index_agt2=rand()%AGENT_ALL;
+
+			index_tsk1=rand()%TASK_NUM;
+			index_tsk2=rand()%TASK_NUM;
+
+			if(index_agt1>index_agt2)
+			{
+				temp=index_agt1;
+				index_agt1=index_agt2;
+				index_agt2=temp;
+			}
+
+			if(index_tsk1>index_tsk2)
+			{
+				temp=index_tsk1;
+				index_tsk1=index_tsk2;
+				index_tsk2=temp;
+			}
+
+			int bit=0;
+
+			for (int i=index_tsk1;i<=index_tsk2;i++)
+				for (int j=index_agt1;j<=index_agt2;j++)
+				{
+					bit=*(*(mut_ptr+i)+j);
+					if (bit==0)
+						*(*(mut_ptr+i)+j)=1;
+
+					if (bit==1)
+						*(*(mut_ptr+i)+j)=0;
+				}	
+		}
+	}
 };
 
 void applyEliteStrategy(Population *old_pop_ptr, Population *crossed_pop_ptr) {

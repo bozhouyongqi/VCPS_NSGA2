@@ -17,6 +17,9 @@
 #define Mutate_pro 0.05
 #define AGENT_ALL AGENT1_NUM + AGENT2_NUM + AGENT3_NUM + AGENT4_NUM + AGENT5_NUM
 
+#define MAX_PATH 256
+#define PRI_MAX 5000
+
 int agentNumInEveryProc[PROCESS_NUM] = {AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGENT4_NUM, AGENT5_NUM};
 
 double normalizeValue[F_NUM] = {0};
@@ -69,5 +72,11 @@ double constraint[TASK_NUM][PROCESS_NUM][F_NUM] = {
 	7.9, 0.36, 790,
 	8.0, 0.32, 760
 };
+
+FILE *time_matrix;
+FILE *Elite_Archive;						//¾«Ó¢µµ°¸
+
+FILE *last_gen_ptr;
+FILE *to_CompareMine;
 
 #endif

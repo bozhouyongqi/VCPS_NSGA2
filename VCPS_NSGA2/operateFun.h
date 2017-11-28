@@ -449,11 +449,6 @@ void mutateCrossedPop(Population *crossed_pop_ptr) {
 	}
 };
 
-void applyEliteStrategy(Population *old_pop_ptr, Population *crossed_pop_ptr) {
-
-}
-
-
 /************************************************************************/
 /*  Routine Comparing the two individuals                                                                    */
 /************************************************************************/

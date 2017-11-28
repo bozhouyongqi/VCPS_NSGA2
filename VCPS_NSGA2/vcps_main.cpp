@@ -12,13 +12,16 @@ double g_pcross=0.8,
 #include "struct.h"
 #include "init.h"
 #include "operateFun.h"
+#include "keepalive.h"
 
 Population oldPop,
 		selectedPop,
 		crossedPop,
+		newPop,
 		*old_pop_ptr,
 		*selected_pop_ptr,
-		*crossed_pop_ptr;
+		*crossed_pop_ptr,
+		*new_pop_ptr;
 
 void main() {
 	cout << "this is a test console";
@@ -42,7 +45,8 @@ void main() {
 			crossSelectedPop(&selectedPop, &crossedPop);
 			mutateCrossedPop(&crossedPop);
 			calIndiviualFitness(&crossedPop);
-			applyEliteStrategy(&oldPop, &crossedPop); // 将oldPop与crossedPop合并，选出新一代种群赋值给oldpPop
+			keepalive(&oldPop, &crossedPop, &newPop, gen); // 将oldPop与crossedPop合并，选出新一代种群放在newPop中
+			oldPop = newPop;
 		}
 	}
 }

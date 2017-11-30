@@ -353,7 +353,7 @@ void crossSelectedPop(Population *selected_pop_ptr, Population *crossed_pop_ptr)
 		y = y+1;
 
 		rnd = (double)rand()/RAND_MAX;
-		if (rnd < g_pcross)
+		if (rnd < Cross_pro)
 		{
 			index_row=rand()%(AGENT_ALL-1)+1;//产生1到AGENT_ALL-1之间的随机数，包含1而不包含AGENT_ALL-1
 			index_col=rand()%(TASK_NUM-1)+1;
@@ -410,7 +410,7 @@ void mutateCrossedPop(Population *crossed_pop_ptr) {
 
 		num_rnd=(double)rand()/RAND_MAX; ;
 
-		if (num_rnd < g_pmut)
+		if (num_rnd < Mutate_pro)
 		{
 
 			index_agt1=rand()%AGENT_ALL;

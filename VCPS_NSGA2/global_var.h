@@ -24,6 +24,7 @@ int agentNumInEveryProc[PROCESS_NUM] = {AGENT1_NUM, AGENT2_NUM, AGENT3_NUM, AGEN
 
 double normalizeValue[F_NUM] = {0};
 double agentPara[F_NUM][AGENT_ALL] = {0};
+double weightFactors[F_NUM] = {0.38, 0.26, 0.36};
 
 
 // 第一个环节对应的企业在时间、质量、成本三个维度上的常数
@@ -78,5 +79,6 @@ FILE *Elite_Archive;						//精英档案
 
 FILE *last_gen_ptr;
 FILE *to_CompareMine;
+FILE *weightValueFile;
 
 #endif

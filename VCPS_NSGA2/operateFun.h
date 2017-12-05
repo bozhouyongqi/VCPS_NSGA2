@@ -11,6 +11,7 @@ void calIndiviualFitness(Population *pop_ptr) {
 
 	for (int indIndex = 0; indIndex < P_NUM; indIndex++) {
 		double fitness[F_NUM] = {0};
+		double weightedVaule = 0;
 		pop_ptr->ind[indIndex].error = 0;
 		for (int taskIndex = 0; taskIndex < TASK_NUM; taskIndex++) {
 			int agentStart = 0,agentEnd = 0;
@@ -44,7 +45,9 @@ void calIndiviualFitness(Population *pop_ptr) {
 		}
 		for (int obj = 0; obj < F_NUM; obj++) {
 			pop_ptr->ind[indIndex].fitness[obj] = fitness[obj];
+			weightedVaule += fitness[obj] * weightFactors[obj];
 		} 
+		pop_ptr->ind[indIndex].weightedValue = weightedVaule;
 	}
 }
 

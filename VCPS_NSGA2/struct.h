@@ -9,6 +9,7 @@ typedef struct
 	int encode[TASK_NUM][AGENT_ALL];
 	int rank;
 	int flag;
+	double weightedValue;
 }Individual;
 
 

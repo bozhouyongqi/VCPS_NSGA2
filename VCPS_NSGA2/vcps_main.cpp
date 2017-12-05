@@ -72,6 +72,7 @@ void main() {
 				cout<<"gen="<<gen<<endl	 ;
 		}
 	}
+	ofz.close();
 	cout <<"test over"<<endl;
 }
 
@@ -93,6 +94,10 @@ void print_last_gen(int run_num,double cost_time)
 	sprintf(file2,"%s\\to_CompareMine%s.txt",file2,num);
 	to_CompareMine=fopen(file2,"wt"); 
 
+	char file3[500];
+	sprintf(file3,"%s\\weightedValue",buffer);
+	sprintf(file3,"%s\\weightedValue%s.txt",file3,num);
+	weightValueFile=fopen(file3,"wt"); 
 
 	int f=0,l=0,m=0,n=0;
 	int best_num=0;
@@ -143,6 +148,7 @@ void print_last_gen(int run_num,double cost_time)
 				fprintf(to_CompareMine,"%f ",old_pop_ptr->ind_ptr->fitness[l]);
 			}
 			fprintf(to_CompareMine,"%s","\n");
+			fprintf(weightValueFile,"%f\n", old_pop_ptr->ind_ptr->weightedValue);
 		}
 	}  //for(f) end;
 	fprintf(last_gen_ptr,"%s","第一层个体数量: ");

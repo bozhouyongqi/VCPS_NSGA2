@@ -9,6 +9,7 @@ typedef struct
 	int encode[TASK_NUM][AGENT_ALL];
 	int rank;
 	int flag;
+	double quality; // 未经过最小化处理的质量
 	double weightedValue;
 }Individual;
 

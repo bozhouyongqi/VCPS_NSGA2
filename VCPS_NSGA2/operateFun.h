@@ -12,6 +12,7 @@ void calIndiviualFitness(Population *pop_ptr) {
 	for (int indIndex = 0; indIndex < P_NUM; indIndex++) {
 		double fitness[F_NUM] = {0};
 		double weightedVaule = 0;
+		double qualitySum = 0;
 		pop_ptr->ind[indIndex].error = 0;
 		for (int taskIndex = 0; taskIndex < TASK_NUM; taskIndex++) {
 			int agentStart = 0,agentEnd = 0;
@@ -27,11 +28,12 @@ void calIndiviualFitness(Population *pop_ptr) {
 						}
 						quality += agentPara[1][agent];
 						cost += agentPara[2][agent];
-						fitness[1] += 1 - agentPara[1][agent] / normalizeValue[1];
-						fitness[2] += agentPara[2][agent] / normalizeValue[2];
+						fitness[1] += 1 - (double)agentPara[1][agent] / normalizeValue[1];
+						fitness[2] += (double)agentPara[2][agent] / normalizeValue[2];
+						qualitySum    += (double)agentPara[1][agent] / normalizeValue[1];
 					}
 				}
-				fitness[0] += maxTime / normalizeValue[0];
+				fitness[0] += (double)maxTime / normalizeValue[0];
 				if (maxTime > constraint[taskIndex][process][0]){ // 判断是否满足限制条件
 					pop_ptr->ind[indIndex].error++;
 				}
@@ -48,6 +50,7 @@ void calIndiviualFitness(Population *pop_ptr) {
 			weightedVaule += fitness[obj] * weightFactors[obj];
 		} 
 		pop_ptr->ind[indIndex].weightedValue = weightedVaule;
+		pop_ptr->ind[indIndex].quality = qualitySum;
 	}
 }
 

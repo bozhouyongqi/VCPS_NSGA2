@@ -132,6 +132,9 @@ void print_last_gen(int run_num,double cost_time)
 			fprintf(last_gen_ptr,"%s","质量(1-q)=");
 			fprintf(last_gen_ptr,"%f,",old_pop_ptr->ind_ptr->fitness[1]);
 
+			fprintf(last_gen_ptr,"%s","质量(q)=");
+			fprintf(last_gen_ptr,"%f,",old_pop_ptr->ind_ptr->quality);
+
 			fprintf(last_gen_ptr,"%s","总花费成本=");
 			fprintf(last_gen_ptr,"%f,",old_pop_ptr->ind_ptr->fitness[2]);
 
@@ -145,10 +148,15 @@ void print_last_gen(int run_num,double cost_time)
 
 			fprintf(last_gen_ptr,"%s","\n");
 			for(l=0;l<F_NUM;l++){
-				fprintf(to_CompareMine,"%f ",old_pop_ptr->ind_ptr->fitness[l]);
+				if (l == 1) {
+					fprintf(to_CompareMine,"%f ",old_pop_ptr->ind_ptr->quality);	// 画图用得数据，质量未经最小化处理
+				}else{
+					fprintf(to_CompareMine,"%f ",old_pop_ptr->ind_ptr->fitness[l]);
+				}
+				
 			}
 			fprintf(to_CompareMine,"%s","\n");
-			fprintf(weightValueFile,"%f\n", old_pop_ptr->ind_ptr->weightedValue);
+			fprintf(weightValueFile,"%f\n", old_pop_ptr->ind_ptr->weightedValue);	// 依旧用得是经过最小化处理的质量，与之前保持不变
 		}
 	}  //for(f) end;
 	fprintf(last_gen_ptr,"%s","第一层个体数量: ");
